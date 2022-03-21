@@ -122,7 +122,11 @@ namespace BetterHUD.Behavior {
 		}
 
 		private string TroopCountDisplay() {
-			return Mission.Current.AttackerTeam.ActiveAgents.Count + " vs " + Mission.Current.DefenderTeam.ActiveAgents.Count;
+			if (Mission.Current.DefenderTeam.ActiveAgents.Count == 0 || Mission.Current.AttackerTeam.ActiveAgents.Count == 0) {
+				return "";
+			} else {
+				return Mission.Current.AttackerTeam.ActiveAgents.Count + " vs " + Mission.Current.DefenderTeam.ActiveAgents.Count;
+			}
         }
 
 		public void HandleHealthUpdates() {
