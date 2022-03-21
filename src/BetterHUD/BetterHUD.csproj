@@ -32,11 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.2.1.1\lib\net472\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.2.1\lib\net472\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="MCMv4, Version=4.3.10.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\Bannerlord.MCM.4.3.10\lib\net472\MCMv4.dll</HintPath>
+    <Reference Include="MCMv4, Version=4.5.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Bannerlord.MCM.4.5.0\lib\net472\MCMv4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -89,10 +89,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /Q "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\*"
-xcopy /Y /E /H /C /I "$(ProjectDir)_Module" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\"
-xcopy /Y "$(ProjectDir)obj\Debug\$(ProjectName).dll" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\"
-xcopy /Y "$(SolutionDir)packages\Bannerlord.MCM.4.3.10\lib\net472\MCMv4.dll" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\"
-xcopy /Y "$(SolutionDir)packages\Lib.Harmony.2.1.1\lib\net472\0Harmony.dll" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\"</PostBuildEvent>
+    <PostBuildEvent>DEL /Q "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\*"
+XCOPY /Y /E /H /C /I "$(ProjectDir)_Module" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\"
+XCOPY /Y "$(ProjectDir)obj\Debug\$(ProjectName).dll" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\"
+XCOPY /Y "$(SolutionDir)packages\Bannerlord.MCM.4.5.0\lib\net472\MCMv4.dll" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\"
+XCOPY /Y "$(SolutionDir)packages\Lib.Harmony.2.2.1\lib\net472\0Harmony.dll" "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)\bin\Win64_Shipping_Client\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>RMDIR /Q /S "S:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\$(ProjectName)"</PreBuildEvent>
   </PropertyGroup>
 </Project>
