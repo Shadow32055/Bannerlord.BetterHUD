@@ -1,10 +1,9 @@
 ﻿using System;
-using TaleWorlds.Core;
 using BetterHUD.Utils;
 using BetterHUD.ViewModels;
 using TaleWorlds.MountAndBlade;
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Engine.GauntletUI;
+using TaleWorlds.ScreenSystem;
 
 namespace BetterHUD.Behavior {
 	class HudManager : MissionBehavior {
@@ -136,9 +135,9 @@ namespace BetterHUD.Behavior {
 			hitUpdateDisplay = MissionTime.SecondsFromNow(3);
 		}
 
-		public override void OnScoreHit(Agent affectedAgent, Agent affectorAgent, WeaponComponentData attackerWeapon, bool isBlocked, float damage, float damagedHp, float movementSpeedDamageModifier, float hitDistance, AgentAttackType attackType, float shotDifficulty, BoneBodyPartType victimHitBodyPart) {
-			base.OnScoreHit(affectedAgent, affectorAgent, attackerWeapon, isBlocked, damage, damagedHp, movementSpeedDamageModifier, hitDistance, attackType, shotDifficulty, victimHitBodyPart);
-			
+        public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, int damage, in MissionWeapon affectorWeapon) {
+            base.OnAgentHit(affectedAgent, affectorAgent, damage, affectorWeapon);
+
 			try {
 				if (affectorAgent.Character != null && affectedAgent.Character != null) {
 					if (affectorAgent == Agent.Main) {
@@ -149,9 +148,9 @@ namespace BetterHUD.Behavior {
 						datasource.EnemyHealthText = HealthDisplay(affectedAgent);
 
 						enemyStatusDisplayTime = MissionTime.SecondsFromNow(30);
-                    }
+					}
 
-                    if (affectedAgent == Agent.Main || affectedAgent == Agent.Main.MountAgent) {
+					if (affectedAgent == Agent.Main || affectedAgent == Agent.Main.MountAgent) {
 
 						if (Agent.Main.Health <= 0) {
 							datasource.EnemyShowStatus = false;
@@ -160,9 +159,9 @@ namespace BetterHUD.Behavior {
 
 						HandleHealthUpdates();
 					}
-                }
+				}
 
-            } catch (Exception e) {
+			} catch (Exception e) {
 				Helper.WriteToLog("Problem with health on hit, cause: " + e);
 			}
 		}
