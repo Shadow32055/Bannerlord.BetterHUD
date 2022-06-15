@@ -135,9 +135,8 @@ namespace BetterHUD.Behavior {
 			hitUpdateDisplay = MissionTime.SecondsFromNow(3);
 		}
 
-        public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, int damage, in MissionWeapon affectorWeapon) {
-            base.OnAgentHit(affectedAgent, affectorAgent, damage, affectorWeapon);
-
+        public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
+            base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
 			try {
 				if (affectorAgent.Character != null && affectedAgent.Character != null) {
 					if (affectorAgent == Agent.Main) {
