@@ -1,6 +1,7 @@
 ﻿using TaleWorlds.MountAndBlade;
 using BetterHUD.Behavior;
 using BetterHUD.Utils;
+using BetterHUD.Settings;
 
 namespace BetterHUD {
 	public class SubModule : MBSubModuleBase {
@@ -11,9 +12,12 @@ namespace BetterHUD {
 
 		protected override void OnBeforeInitialModuleScreenSetAsRoot() {
 			base.OnBeforeInitialModuleScreenSetAsRoot();
-            //new Harmony("Bannerlord.Shadow.BetterCombat").PatchAll();
-            Helper.SetModName("BetterHUD");
-		}
+
+            string modName = base.GetType().Assembly.GetName().Name;
+
+            Helper.SetModName(modName);
+            Helper.settings = SettingsManager.Instance;
+        }
 
         public override void OnMissionBehaviorInitialize(Mission mission) {
             base.OnMissionBehaviorInitialize(mission);

@@ -75,18 +75,29 @@ namespace BetterHUD.Behavior {
 		}
 
 		private void NonCriticalUpdate() {
-			datasource.TroopCountText = TroopCountDisplay();
+			if (Helper.settings.showTroopCounts) {
+				datasource.TroopCountText = TroopCountDisplay();
+			}
 		}
 
         private void HitUpdateHUDElements(float dmg) {
-			datasource.PlayerHealthText = HealthDisplay(Mission.Current.MainAgent);
-			datasource.PlayerDamageText = PlayerDamageDisplay(dmg);
-			datasource.PlayerShieldText = PlayerShieldDisplay();
-			datasource.MountHealthText = MountHealthDisplay();
+            datasource.PlayerDamageText = PlayerDamageDisplay(dmg);
+
+			if (Helper.settings.showDetailedPlayerInfo) {
+				datasource.PlayerHealthText = HealthDisplay(Mission.Current.MainAgent, Helper.settings.makePercent);
+
+				datasource.PlayerShieldText = PlayerShieldDisplay();
+				datasource.MountHealthText = MountHealthDisplay();
+			}
 		}
 
-		private string HealthDisplay(Agent a) {
+		private string HealthDisplay(Agent a, bool percent) {
+			if (percent) {
+                return ((a.Health / a.HealthLimit) * 100) + "%";
+            }
+
 			return a.Health + "/" + a.HealthLimit;
+			
         }
 
 		private string PlayerDamageDisplay(float dmg) {
@@ -97,7 +108,7 @@ namespace BetterHUD.Behavior {
 			}
 		}
 
-		private float HelthFromLastRun() {
+		private float HealthFromLastRun() {
 			float healthChange = Mission.Current.MainAgent.Health - lastHealth;
 			lastHealth = Mission.Current.MainAgent.Health;
 
@@ -106,6 +117,11 @@ namespace BetterHUD.Behavior {
 
 		private string PlayerShieldDisplay() {
 			if (Mission.Current.MainAgent.WieldedOffhandWeapon.IsShield()) {
+				if (Helper.settings.makePercent) {
+                    return ((Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints / Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints) * 100) + "%";
+
+                }
+
 				return Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints + "/" + Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints;
 			} else {
 				return "";
@@ -114,6 +130,9 @@ namespace BetterHUD.Behavior {
 
 		private string MountHealthDisplay() {
 			if (Mission.MainAgent.HasMount) {
+				if (Helper.settings.makePercent) {
+                    return (Math.Round((Mission.Current.MainAgent.MountAgent.Health / Mission.Current.MainAgent.MountAgent.HealthLimit ) * 100)) + "%";
+                }
 				return Mission.Current.MainAgent.MountAgent.Health + "/" + Mission.Current.MainAgent.MountAgent.HealthLimit;
 			} else {
 				return "";
@@ -129,10 +148,10 @@ namespace BetterHUD.Behavior {
         }
 
 		public void HandleHealthUpdates() {
-			displayedDamage = displayedDamage + HelthFromLastRun();
+			displayedDamage = displayedDamage + HealthFromLastRun();
 
 			HitUpdateHUDElements(displayedDamage);
-			hitUpdateDisplay = MissionTime.SecondsFromNow(3);
+			hitUpdateDisplay = MissionTime.SecondsFromNow(2);
 		}
 
         public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
@@ -140,13 +159,15 @@ namespace BetterHUD.Behavior {
 			try {
 				if (affectorAgent.Character != null && affectedAgent.Character != null) {
 					if (affectorAgent == Agent.Main) {
-						datasource.EnemyShowStatus = true;
-						datasource.EnemyNameText = affectedAgent.Name;
-						datasource.EnemyHealth = (int)Math.Round(affectedAgent.Health);
-						datasource.EnemyMaxHealth = (int)Math.Round(affectedAgent.HealthLimit);
-						datasource.EnemyHealthText = HealthDisplay(affectedAgent);
+						if (Helper.settings.showEnemyInfo) {
+							datasource.EnemyShowStatus = true;
+							datasource.EnemyNameText = affectedAgent.Name;
+							datasource.EnemyHealth = (int)Math.Round(affectedAgent.Health);
+							datasource.EnemyMaxHealth = (int)Math.Round(affectedAgent.HealthLimit);
+							datasource.EnemyHealthText = HealthDisplay(affectedAgent, Helper.settings.makePercent);
 
-						enemyStatusDisplayTime = MissionTime.SecondsFromNow(30);
+							enemyStatusDisplayTime = MissionTime.SecondsFromNow(30);
+						}
 					}
 
 					if (affectedAgent == Agent.Main || affectedAgent == Agent.Main.MountAgent) {

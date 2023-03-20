@@ -1,5 +1,4 @@
 ﻿using BetterHUD.Settings;
-using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace BetterHUD.Utils {
@@ -7,12 +6,10 @@ namespace BetterHUD.Utils {
         public static string modName = "ForgotToSet";
         public static ISettings settings;
 
-
         public static void SetModName(string name) {
             modName = name;
             DisplayFriendlyMsg(modName + " Loaded.");
         }
-
 
         public static void DisplayFriendlyMsg(string msg) {
             InformationManager.DisplayMessage(new InformationMessage(msg, Colors.Green));
