@@ -4,6 +4,7 @@ using BetterHUD.ViewModels;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.ScreenSystem;
+using NetworkMessages.FromServer;
 
 namespace BetterHUD.Behavior {
 	class HudManager : MissionBehavior {
@@ -117,12 +118,19 @@ namespace BetterHUD.Behavior {
 
 		private string PlayerShieldDisplay() {
 			if (Mission.Current.MainAgent.WieldedOffhandWeapon.IsShield()) {
-				if (Helper.settings.makePercent) {
-                    return ((Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints / Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints) * 100) + "%";
+
+                float hitpoints = (float)Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints;
+                float maxHitpoints = (float)Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints;
+
+				Helper.DisplayMsg(hitpoints + " / " + maxHitpoints + "    " + Math.Floor(hitpoints / maxHitpoints * 100));
+                if (Helper.settings.makePercent) {
+					
+
+                    return Math.Floor( hitpoints / maxHitpoints * 100) + "%";
 
                 }
 
-				return Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints + "/" + Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints;
+				return hitpoints + "/" + maxHitpoints;
 			} else {
 				return "";
             }
@@ -131,7 +139,7 @@ namespace BetterHUD.Behavior {
 		private string MountHealthDisplay() {
 			if (Mission.MainAgent.HasMount) {
 				if (Helper.settings.makePercent) {
-                    return (Math.Round((Mission.Current.MainAgent.MountAgent.Health / Mission.Current.MainAgent.MountAgent.HealthLimit ) * 100)) + "%";
+                    return Math.Floor(Mission.Current.MainAgent.MountAgent.Health / Mission.Current.MainAgent.MountAgent.HealthLimit  * 100) + "%";
                 }
 				return Mission.Current.MainAgent.MountAgent.Health + "/" + Mission.Current.MainAgent.MountAgent.HealthLimit;
 			} else {
