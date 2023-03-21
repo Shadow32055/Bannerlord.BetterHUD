@@ -122,7 +122,6 @@ namespace BetterHUD.Behavior {
                 float hitpoints = (float)Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints;
                 float maxHitpoints = (float)Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints;
 
-				Helper.DisplayMsg(hitpoints + " / " + maxHitpoints + "    " + Math.Floor(hitpoints / maxHitpoints * 100));
                 if (Helper.settings.makePercent) {
 					
 
