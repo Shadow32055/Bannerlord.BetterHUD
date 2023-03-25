@@ -94,7 +94,7 @@ namespace BetterHUD.Behavior {
 
 		private string HealthDisplay(Agent a, bool percent) {
 			if (percent) {
-                return ((a.Health / a.HealthLimit) * 100) + "%";
+                return Math.Floor(a.Health / a.HealthLimit * 100) + "%";
             }
 
 			return a.Health + "/" + a.HealthLimit;
