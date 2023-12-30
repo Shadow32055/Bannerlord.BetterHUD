@@ -10,8 +10,10 @@ namespace BetterHUD.ViewModels {
 		private string mountHealth = "";
 
 		private string troopCount = "";
+        private string attackerTroopCount = "";
+        private string defenderTroopCount = "";
 
-		private string enemyHealth = "";
+        private string enemyHealth = "";
 
 		private string enemyName = "";
 		private int enemyHealthInt = 0;
@@ -141,5 +143,27 @@ namespace BetterHUD.ViewModels {
 				base.OnPropertyChangedWithValue(value, "TroopCountText");
 			}
 		}
-	}
+
+        [DataSourceProperty]
+        public string AttackerTroopCountText {
+            get {
+                return attackerTroopCount;
+            }
+            set {
+                this.attackerTroopCount = value;
+                base.OnPropertyChangedWithValue(value, "AttackerTroopCountText");
+            }
+        }
+
+        [DataSourceProperty]
+        public string DefenderTroopCountText {
+            get {
+                return defenderTroopCount;
+            }
+            set {
+                this.defenderTroopCount = value;
+                base.OnPropertyChangedWithValue(value, "DefenderTroopCountText");
+            }
+        }
+    }
 }

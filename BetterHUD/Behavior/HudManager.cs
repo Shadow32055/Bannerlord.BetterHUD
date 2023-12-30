@@ -77,7 +77,14 @@ namespace BetterHUD.Behavior {
 
 		private void NonCriticalUpdate() {
 			if (Helper.settings.showTroopCounts) {
-				datasource.TroopCountText = TroopCountDisplay();
+				//datasource.TroopCountText = TroopCountDisplay();
+				if (AttackerTroopCountDisplay() == "" || DefenderTroopCountDisplay() == "") {
+                    datasource.AttackerTroopCountText = "";
+                    datasource.DefenderTroopCountText = "";
+                } else {
+					datasource.AttackerTroopCountText = AttackerTroopCountDisplay();
+					datasource.DefenderTroopCountText = DefenderTroopCountDisplay();
+				}
 			}
 		}
 
@@ -154,7 +161,23 @@ namespace BetterHUD.Behavior {
 			}
         }
 
-		public void HandleHealthUpdates() {
+        private string DefenderTroopCountDisplay() {
+            if (Mission.Current.DefenderTeam.ActiveAgents.Count == 0) {
+                return "";
+            } else {
+                return Mission.Current.DefenderTeam.ActiveAgents.Count.ToString();
+            }
+        }
+
+        private string AttackerTroopCountDisplay() {
+            if (Mission.Current.AttackerTeam.ActiveAgents.Count == 0) {
+                return "";
+            } else {
+                return Mission.Current.AttackerTeam.ActiveAgents.Count.ToString();
+            }
+        }
+
+        public void HandleHealthUpdates() {
 			displayedDamage = displayedDamage + HealthFromLastRun();
 
 			HitUpdateHUDElements(displayedDamage);
