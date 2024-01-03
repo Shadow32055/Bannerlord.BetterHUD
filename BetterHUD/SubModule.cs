@@ -1,14 +1,13 @@
 ﻿using TaleWorlds.MountAndBlade;
 using BetterHUD.Behavior;
-using BetterHUD.Utils;
+using BetterCore.Utils;
 using BetterHUD.Settings;
 
 namespace BetterHUD {
 	public class SubModule : MBSubModuleBase {
 
-		protected override void OnSubModuleLoad() {
-			base.OnSubModuleLoad();
-		}
+		public static MCMSettings _settings;
+	
 
 		protected override void OnBeforeInitialModuleScreenSetAsRoot() {
 			base.OnBeforeInitialModuleScreenSetAsRoot();
@@ -16,7 +15,7 @@ namespace BetterHUD {
             string modName = base.GetType().Assembly.GetName().Name;
 
             Helper.SetModName(modName);
-            Helper.settings = SettingsManager.Instance;
+            _settings = MCMSettings.Instance;
         }
 
         public override void OnMissionBehaviorInitialize(Mission mission) {

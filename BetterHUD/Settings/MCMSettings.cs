@@ -1,11 +1,10 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Base.Global;
-using MCM.Common;
 
 namespace BetterHUD.Settings {
 
-    internal class MCMSettings : AttributeGlobalSettings<MCMSettings>, ISettings {
+    public class MCMSettings : AttributeGlobalSettings<MCMSettings> {
 
         const string optionText = "{=BH_oPw9hh}Options";
 
