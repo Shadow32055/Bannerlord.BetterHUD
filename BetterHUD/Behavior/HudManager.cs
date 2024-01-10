@@ -38,7 +38,7 @@ namespace BetterHUD.Behavior {
 
 						if (noncriticalUpdateDiplay.IsPast) {
 							NonCriticalUpdate();
-							noncriticalUpdateDiplay = MissionTime.SecondsFromNow(5);
+							noncriticalUpdateDiplay = MissionTime.SecondsFromNow(BetterHUD.Settings.TroopUpdateInterval);
                         }
 
 						if (healthChecker.IsPast) {
@@ -46,7 +46,7 @@ namespace BetterHUD.Behavior {
 								HandleHealthUpdates();
 							}
 
-							healthChecker = MissionTime.SecondsFromNow(1);
+							healthChecker = MissionTime.SecondsFromNow(BetterHUD.Settings.PlayerUpdateInterval);
                         }
 					}
 				} else {
@@ -56,7 +56,7 @@ namespace BetterHUD.Behavior {
 					healthChecker = MissionTime.Zero;
 				}
 			} catch (Exception e) {
-				Logger.SendMessage("Problem with hud manager, cause: " + e, Severity.High);
+				NotifyHelper.ReportError(BetterHUD.ModName, "Problem with hud manager, cause: " + e);
 			}
 		}
 
@@ -75,7 +75,7 @@ namespace BetterHUD.Behavior {
 		}
 
 		private void NonCriticalUpdate() {
-			if (SubModule._settings.showTroopCounts) {
+			if (BetterHUD.Settings.ShowTroopCounts) {
 				//datasource.TroopCountText = TroopCountDisplay();
 				if (AttackerTroopCountDisplay() == "" || DefenderTroopCountDisplay() == "") {
                     datasource.AttackerTroopCountText = "";
@@ -90,8 +90,8 @@ namespace BetterHUD.Behavior {
         private void HitUpdateHUDElements(float dmg) {
             datasource.PlayerDamageText = PlayerDamageDisplay(dmg);
 
-			if (SubModule._settings.showDetailedPlayerInfo) {
-				datasource.PlayerHealthText = HealthDisplay(Mission.Current.MainAgent, SubModule._settings.makePercent);
+			if (BetterHUD.Settings.ShowDetailedPlayerInfo) {
+				datasource.PlayerHealthText = HealthDisplay(Mission.Current.MainAgent, BetterHUD.Settings.MakePercent);
 
 				datasource.PlayerShieldText = PlayerShieldDisplay();
 				datasource.MountHealthText = MountHealthDisplay();
@@ -103,7 +103,7 @@ namespace BetterHUD.Behavior {
                 return Math.Floor(a.Health / a.HealthLimit * 100) + "%";
             }
 
-			return a.Health + "/" + a.HealthLimit;
+			return Math.Round(a.Health) + "/" + Math.Round(a.HealthLimit);
 			
         }
 
@@ -128,14 +128,14 @@ namespace BetterHUD.Behavior {
                 float hitpoints = (float)Mission.Current.MainAgent.WieldedOffhandWeapon.HitPoints;
                 float maxHitpoints = (float)Mission.Current.MainAgent.WieldedOffhandWeapon.ModifiedMaxHitPoints;
 
-                if (SubModule._settings.makePercent) {
+                if (BetterHUD.Settings.MakePercent) {
 					
 
                     return Math.Floor( hitpoints / maxHitpoints * 100) + "%";
 
                 }
 
-				return hitpoints + "/" + maxHitpoints;
+				return Math.Round(hitpoints) + "/" + Math.Round(maxHitpoints);
 			} else {
 				return "";
             }
@@ -143,10 +143,10 @@ namespace BetterHUD.Behavior {
 
 		private string MountHealthDisplay() {
 			if (Mission.MainAgent.HasMount) {
-				if (SubModule._settings.makePercent) {
+				if (BetterHUD.Settings.MakePercent) {
                     return Math.Floor(Mission.Current.MainAgent.MountAgent.Health / Mission.Current.MainAgent.MountAgent.HealthLimit  * 100) + "%";
                 }
-				return Mission.Current.MainAgent.MountAgent.Health + "/" + Mission.Current.MainAgent.MountAgent.HealthLimit;
+				return Math.Round(Mission.Current.MainAgent.MountAgent.Health) + "/" + Math.Round(Mission.Current.MainAgent.MountAgent.HealthLimit);
 			} else {
 				return "";
             }
@@ -186,16 +186,17 @@ namespace BetterHUD.Behavior {
         public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
 			try {
-				if (affectorAgent.Character != null && affectedAgent.Character != null) {
-					if (affectorAgent == Agent.Main) {
-						if (SubModule._settings.showEnemyInfo) {
+				if (BetterHUD.Settings.ShowEnemyInfo) {
+					if (affectorAgent.Character != null && affectedAgent.Character != null) {
+						if (affectorAgent == Agent.Main) {
+
 							datasource.EnemyShowStatus = true;
 							datasource.EnemyNameText = affectedAgent.Name;
 							datasource.EnemyHealth = (int)Math.Round(affectedAgent.Health);
 							datasource.EnemyMaxHealth = (int)Math.Round(affectedAgent.HealthLimit);
-							datasource.EnemyHealthText = HealthDisplay(affectedAgent, SubModule._settings.makePercent);
+							datasource.EnemyHealthText = HealthDisplay(affectedAgent, BetterHUD.Settings.MakePercent);
 
-							enemyStatusDisplayTime = MissionTime.SecondsFromNow(30);
+							enemyStatusDisplayTime = MissionTime.SecondsFromNow(BetterHUD.Settings.EnemyInfoDisplayTime);
 						}
 					}
 
@@ -211,7 +212,7 @@ namespace BetterHUD.Behavior {
 				}
 
 			} catch (Exception e) {
-				Logger.SendMessage("Problem with health on hit, cause: " + e, Severity.High);
+				NotifyHelper.ReportError(BetterHUD.ModName, "Problem with health on hit, cause: " + e);
 			}
 		}
     }
