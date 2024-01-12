@@ -186,33 +186,50 @@ namespace BetterHUD.Behavior {
         public override void OnAgentHit(Agent affectedAgent, Agent affectorAgent, in MissionWeapon affectorWeapon, in Blow blow, in AttackCollisionData attackCollisionData) {
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
 			try {
-				if (BetterHUD.Settings.ShowEnemyInfo) {
-					if (affectorAgent.Character != null && affectedAgent.Character != null) {
-						if (affectorAgent == Agent.Main) {
 
-							datasource.EnemyShowStatus = true;
-							datasource.EnemyNameText = affectedAgent.Name;
-							datasource.EnemyHealth = (int)Math.Round(affectedAgent.Health);
-							datasource.EnemyMaxHealth = (int)Math.Round(affectedAgent.HealthLimit);
-							datasource.EnemyHealthText = HealthDisplay(affectedAgent, BetterHUD.Settings.MakePercent);
+                if (affectorAgent == null)
+                    return;
 
-							enemyStatusDisplayTime = MissionTime.SecondsFromNow(BetterHUD.Settings.EnemyInfoDisplayTime);
-						}
-					}
+                if (affectedAgent == null)
+                    return;
 
-					if (affectedAgent == Agent.Main || affectedAgent == Agent.Main.MountAgent) {
+                if (BetterHUD.Settings.ShowEnemyInfo) {
+					if (affectorAgent == Agent.Main) {
+
+						datasource.EnemyShowStatus = true;
+						datasource.EnemyNameText = affectedAgent.Name;
+						datasource.EnemyHealth = (int)Math.Round(affectedAgent.Health);
+						datasource.EnemyMaxHealth = (int)Math.Round(affectedAgent.HealthLimit);
+						datasource.EnemyHealthText = HealthDisplay(affectedAgent, BetterHUD.Settings.MakePercent);
+
+						enemyStatusDisplayTime = MissionTime.SecondsFromNow(BetterHUD.Settings.EnemyInfoDisplayTime);
 
 						if (Agent.Main.Health <= 0) {
 							datasource.EnemyShowStatus = false;
 							displayedDamage = 0;
 						}
-
-						HandleHealthUpdates();
 					}
 				}
 
+                if (affectedAgent == Agent.Main) {
+
+					if (Agent.Main.Health <= 0) {
+						datasource.EnemyShowStatus = false;
+						displayedDamage = 0;
+					}
+
+					HandleHealthUpdates();
+				}
+
+				if (Agent.Main.HasMount) {
+					if (affectedAgent == Agent.Main.MountAgent) {
+						HandleHealthUpdates();
+					}
+				}
+				
+
 			} catch (Exception e) {
-				NotifyHelper.ReportError(BetterHUD.ModName, "Problem with health on hit, cause: " + e);
+				NotifyHelper.ReportError(BetterHUD.ModName, "OnAgentHit threw exception: " + e);
 			}
 		}
     }
