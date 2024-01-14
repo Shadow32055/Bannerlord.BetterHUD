@@ -221,6 +221,9 @@ namespace BetterHUD.Behavior {
 					HandleHealthUpdates();
 				}
 
+				if (Agent.Main == null)
+					return;
+
 				if (Agent.Main.HasMount) {
 					if (affectedAgent == Agent.Main.MountAgent) {
 						HandleHealthUpdates();
