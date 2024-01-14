@@ -24,7 +24,5 @@
 
         public const string DisplayTimeText = "{=BHU_rLw6DJ}Info Display Time";
         public const string DisplayTimeHint = "{=BHU_gLdubA}How long the enemy information should be displayed";
-
-
     }
 }

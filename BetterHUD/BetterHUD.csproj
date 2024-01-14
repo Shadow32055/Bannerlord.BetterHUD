@@ -53,7 +53,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="_Module\GUI\Brushes\ImprovedHUDBrushes.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="_Module\GUI\Prefabs\ImprovedHUD.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="_Module\SubModule.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

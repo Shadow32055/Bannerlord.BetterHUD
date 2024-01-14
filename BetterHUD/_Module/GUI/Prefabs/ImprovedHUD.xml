@@ -1,6 +1,5 @@
 <Prefab>
 	<Window>
-    
 		<Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
 			<Children>
 				<FillBar WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="210" SuggestedHeight="8" HorizontalAlignment="Center" VerticalAlignment="Bottom" PositionYOffset="-20" Brush="HealthBarBrush" InitialAmount="@EnemyHealth" IsVertical="false" MaxAmount="@EnemyMaxHealth" IsVisible="@EnemyShowStatus"/>
@@ -17,6 +16,6 @@
 				<TextWidget SuggestedWidth="100" HorizontalAlignment="Center" VerticalAlignment="Top" PositionYOffset="45" PositionXOffset="-295" ClipContents="false" Brush="CustomBrushLargeCenter" Text="@AttackerTroopCountText"/>
 				<TextWidget SuggestedWidth="100" HorizontalAlignment="Center" VerticalAlignment="Top" PositionYOffset="45" PositionXOffset="295" ClipContents="false" Brush="CustomBrushLargeCenter" Text="@DefenderTroopCountText"/>
 			</Children>
-    </Widget>
+		</Widget>
 	</Window>
 </Prefab>
