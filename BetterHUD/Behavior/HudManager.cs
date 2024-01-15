@@ -62,12 +62,13 @@ namespace BetterHUD.Behavior {
 
         public override void AfterStart() {
 
-			this.layer = new GauntletLayer(100, "GauntletLayer", true);
+			this.layer = new GauntletLayer(49, "GauntletLayer", true);
 
 			datasource = new ImprovedHudViewModel();
 
 			//Name of GUI xmls.
 			this.layer.LoadMovie("ImprovedHUD", datasource);
+			
 
 			this.sbase = ScreenManager.TopScreen;
 			this.sbase.AddLayer(this.layer);
@@ -161,19 +162,31 @@ namespace BetterHUD.Behavior {
         }
 
         private string DefenderTroopCountDisplay() {
-            if (Mission.Current.DefenderTeam.ActiveAgents.Count == 0) {
+			if (Mission.Current.DefenderTeam == null)
+				return "";
+
+			if (Mission.Current.DefenderTeam.ActiveAgents == null)
+				return "";
+
+            if (Mission.Current.DefenderTeam.ActiveAgents.Count == 0)
                 return "";
-            } else {
-                return Mission.Current.DefenderTeam.ActiveAgents.Count.ToString();
-            }
+
+            
+            return Mission.Current.DefenderTeam.ActiveAgents.Count.ToString();
         }
 
         private string AttackerTroopCountDisplay() {
-            if (Mission.Current.AttackerTeam.ActiveAgents.Count == 0) {
+            if (Mission.Current.AttackerTeam == null)
                 return "";
-            } else {
-                return Mission.Current.AttackerTeam.ActiveAgents.Count.ToString();
-            }
+
+            if (Mission.Current.AttackerTeam.ActiveAgents == null)
+                return "";
+
+            if (Mission.Current.AttackerTeam.ActiveAgents.Count == 0)
+                return "";
+
+
+            return Mission.Current.AttackerTeam.ActiveAgents.Count.ToString();
         }
 
         public void HandleHealthUpdates() {

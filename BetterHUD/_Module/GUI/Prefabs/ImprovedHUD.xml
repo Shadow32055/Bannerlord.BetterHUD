@@ -10,7 +10,7 @@
       
 				<TextWidget SuggestedWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" PositionYOffset="-141" PositionXOffset="-150" ClipContents="false" Brush="CustomBrushCenter" Text="@PlayerShieldText"/>
 				<TextWidget SuggestedWidth="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" PositionYOffset="-116" PositionXOffset="-155" ClipContents="false" Brush="CustomBrushMediumCenter" Text="@PlayerHealthText"/>
-				<TextWidget SuggestedWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" PositionYOffset="-91" PositionXOffset="-150" ClipContents="false" Brush="CustomBrushCenter" Text="@MountHealthText"/>
+				<TextWidget SuggestedWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" PositionYOffset="-92" PositionXOffset="-150" ClipContents="false" Brush="CustomBrushCenter" Text="@MountHealthText"/>
       
 				<TextWidget SuggestedWidth="100" HorizontalAlignment="Center" VerticalAlignment="Top" PositionYOffset="45" ClipContents="false" Brush="CustomBrushLargeCenter" Text="@TroopCountText"/>
 				<TextWidget SuggestedWidth="100" HorizontalAlignment="Center" VerticalAlignment="Top" PositionYOffset="45" PositionXOffset="-295" ClipContents="false" Brush="CustomBrushLargeCenter" Text="@AttackerTroopCountText"/>
