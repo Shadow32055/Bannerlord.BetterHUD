@@ -15,15 +15,18 @@ namespace BetterHUD.Behavior {
 		float lastHealth;
 		float displayedDamage;
 
-		private GauntletLayer layer;
-		public ScreenBase sbase;
+		private GauntletLayer? layer;
+		public ScreenBase? sbase;
 
-		private ImprovedHudViewModel datasource;
+		private ImprovedHudViewModel? datasource;
 
 		public override void OnMissionTick(float dt) {
 			base.OnMissionTick(dt);
+            try {
 
-			try {
+                if (datasource is null)
+				return;
+
 				//Check if we are in a mission
 				if (Mission.Current != null) {
 					if (Mission.Current.MainAgent != null) {
@@ -56,7 +59,7 @@ namespace BetterHUD.Behavior {
 					healthChecker = MissionTime.Zero;
 				}
 			} catch (Exception e) {
-				NotifyHelper.ReportError(BetterHUD.ModName, "Problem with hud manager, cause: " + e);
+				NotifyHelper.WriteError(BetterHUD.ModName, "Problem with hud manager, cause: " + e);
 			}
 		}
 
@@ -76,6 +79,9 @@ namespace BetterHUD.Behavior {
 		}
 
 		private void NonCriticalUpdate() {
+			if (datasource is null)
+				return;
+
 			if (BetterHUD.Settings.ShowTroopCounts) {
 				//datasource.TroopCountText = TroopCountDisplay();
 				if (AttackerTroopCountDisplay() == "" || DefenderTroopCountDisplay() == "") {
@@ -89,6 +95,9 @@ namespace BetterHUD.Behavior {
 		}
 
         private void HitUpdateHUDElements(float dmg) {
+			if (datasource is null)
+				return;
+
             datasource.PlayerDamageText = PlayerDamageDisplay(dmg);
 
 			if (BetterHUD.Settings.ShowDetailedPlayerInfo) {
@@ -200,11 +209,14 @@ namespace BetterHUD.Behavior {
             base.OnAgentHit(affectedAgent, affectorAgent, affectorWeapon, blow, attackCollisionData);
 			try {
 
-                if (affectorAgent == null)
+                if (affectorAgent is null)
                     return;
 
-                if (affectedAgent == null)
+                if (affectedAgent is null)
                     return;
+
+				if (datasource is null)
+					return;
 
                 if (BetterHUD.Settings.ShowEnemyInfo) {
 					if (affectorAgent == Agent.Main) {
@@ -245,7 +257,7 @@ namespace BetterHUD.Behavior {
 				
 
 			} catch (Exception e) {
-				NotifyHelper.ReportError(BetterHUD.ModName, "OnAgentHit threw exception: " + e);
+				NotifyHelper.WriteError(BetterHUD.ModName, "OnAgentHit threw exception: " + e);
 			}
 		}
     }
