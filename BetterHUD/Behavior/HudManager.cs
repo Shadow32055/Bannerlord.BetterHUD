@@ -10,7 +10,7 @@ namespace BetterHUD.Behavior {
 
 		public override MissionBehaviorType BehaviorType => MissionBehaviorType.Other;
 
-		MissionTime hitUpdateDisplay, noncriticalUpdateDiplay, enemyStatusDisplayTime, healthChecker;
+		MissionTime hitUpdateDisplay, noncriticalUpdateDisplay, enemyStatusDisplayTime, healthChecker;
 
 		float lastHealth;
 		float displayedDamage;
@@ -39,9 +39,9 @@ namespace BetterHUD.Behavior {
 							datasource.EnemyShowStatus = false;
                         }
 
-						if (noncriticalUpdateDiplay.IsPast) {
+						if (noncriticalUpdateDisplay.IsPast) {
 							NonCriticalUpdate();
-							noncriticalUpdateDiplay = MissionTime.SecondsFromNow(BetterHUD.Settings.TroopUpdateInterval);
+							noncriticalUpdateDisplay = MissionTime.SecondsFromNow(BetterHUD.Settings.TroopUpdateInterval);
                         }
 
 						if (healthChecker.IsPast) {
@@ -55,7 +55,7 @@ namespace BetterHUD.Behavior {
 				} else {
 					hitUpdateDisplay = MissionTime.Zero;
 					enemyStatusDisplayTime = MissionTime.Zero;
-					noncriticalUpdateDiplay = MissionTime.Zero;
+					noncriticalUpdateDisplay = MissionTime.Zero;
 					healthChecker = MissionTime.Zero;
 				}
 			} catch (Exception e) {
