@@ -12,7 +12,7 @@ namespace BetterHUD.Settings {
         public bool ShowTroopCounts { get; set; } = true;
 
         [SettingPropertyGroup(RefValues.OptionText + "/" + RefValues.TroopInfoText)]
-        [SettingPropertyInteger(RefValues.UpdateIntText, 1, 30, "0 " + RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.UpdateIntHint)]
+        [SettingPropertyInteger(RefValues.UpdateIntText, 1, 30, RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.UpdateIntHint)]
         public int TroopUpdateInterval { get; set; } = 5;
 
 
@@ -22,7 +22,7 @@ namespace BetterHUD.Settings {
         public bool ShowDetailedPlayerInfo { get; set; } = true;
 
         [SettingPropertyGroup(RefValues.OptionText + "/" + RefValues.PlayerInfoText)]
-        [SettingPropertyInteger(RefValues.UpdateIntText, 1, 30, "0 " + RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.UpdateIntHint)]
+        [SettingPropertyInteger(RefValues.UpdateIntText, 1, 30, RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.UpdateIntHint)]
         public int PlayerUpdateInterval { get; set; } = 1;
 
         [SettingPropertyGroup(RefValues.OptionText + "/" + RefValues.PlayerInfoText)]
@@ -36,7 +36,7 @@ namespace BetterHUD.Settings {
         public bool ShowEnemyInfo { get; set; } = true;
 
         [SettingPropertyGroup(RefValues.OptionText + "/" + RefValues.EnemyInfoText)]
-        [SettingPropertyInteger(RefValues.DisplayTimeText, 1, 300, "0 " + RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.DisplayTimeHint)]
+        [SettingPropertyInteger(RefValues.DisplayTimeText, 1, 300, RefValues.SecondsText, Order = 0, RequireRestart = false, HintText = RefValues.DisplayTimeHint)]
         public int EnemyInfoDisplayTime { get; set; } = 30;
 
 
