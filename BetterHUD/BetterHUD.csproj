@@ -18,19 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="bin\**" />
-    <EmbeddedResource Remove="bin\**" />
-    <None Remove="bin\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Bannerlord.ButterLib" Version="2.9.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -44,7 +31,7 @@
 
   <ItemGroup>
     <Reference Include="BetterCore">
-      <HintPath>..\..\Bannerlord.BetterCore\BetterCore\bin\x64\Debug\net472\BetterCore.dll</HintPath>
+      <HintPath>..\..\Bannerlord.BetterCore\BetterCore\bin\x64\Debug\netstandard2.0\BetterCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 
