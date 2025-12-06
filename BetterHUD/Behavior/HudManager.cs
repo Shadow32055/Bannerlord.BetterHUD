@@ -65,7 +65,7 @@ namespace BetterHUD.Behavior {
 
         public override void AfterStart() {
 
-			this.layer = new GauntletLayer(49, "GauntletLayer", true);
+			this.layer = new GauntletLayer("GauntletLayer", 49, true);
 
 			datasource = new ImprovedHudViewModel();
 
